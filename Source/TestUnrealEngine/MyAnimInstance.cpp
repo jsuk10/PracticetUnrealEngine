@@ -8,10 +8,9 @@ void UMyAnimInstance::NativeUpdateAnimation(float DeltaSeconds)
 	Super::NativeUpdateAnimation(DeltaSeconds);
 
 	auto pawn = TryGetPawnOwner();
-	if(Isvalid(pawn))
+	if(IsValid(pawn))
 	{
-
-		speed = pawn->GetVelocity().Size();
+		Speed = pawn->GetVelocity().Size();
 	}
 
 }
