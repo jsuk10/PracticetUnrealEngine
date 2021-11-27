@@ -65,6 +65,7 @@ void AMyCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompone
 
 void AMyCharacter::UpDown(float Value)
 {
+	UpDownValue = Value;
 	if (Value == 0.f)
 		return;
 
@@ -74,9 +75,9 @@ void AMyCharacter::UpDown(float Value)
 
 void AMyCharacter::LeftRight(float Value)
 {
+	LeftRightValue = Value;
 	if (Value == 0.f)
 		return;
-
 	//UE_LOG(LogTemp, Warning, TEXT("LeftRight %f"), Value);
 	AddMovementInput(GetActorRightVector(), Value);
 }

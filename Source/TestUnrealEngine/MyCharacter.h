@@ -48,4 +48,10 @@ private:
 
 	UPROPERTY(VisibleAnywhere)
 	int32 AttackIndex = 0;
+public:
+	//BP에서 얻어올 수 있도록 변수 선언하여 움직일때 갱신해줌
+	UPROPERTY(VisibleAnywhere)
+	float UpDownValue = 0;
+	UPROPERTY(VisibleAnywhere)
+	float LeftRightValue= 0 ;
 };

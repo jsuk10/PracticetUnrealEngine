@@ -29,6 +29,12 @@ private:
 	float Speed;
 
 	UPROPERTY(EditAnywhere,BlueprintReadOnly, Category="Pwan", Meta=(AllowPrivateAccess=true))
+	float Horizontal;
+	
+	UPROPERTY(EditAnywhere,BlueprintReadOnly, Category="Pwan", Meta=(AllowPrivateAccess=true))
+	float Virtical;
+
+	UPROPERTY(EditAnywhere,BlueprintReadOnly, Category="Pwan", Meta=(AllowPrivateAccess=true))
 	bool IsFalling;
 
 	UPROPERTY(EditAnywhere,BlueprintReadOnly, Category="Pwan", Meta=(AllowPrivateAccess=true))
