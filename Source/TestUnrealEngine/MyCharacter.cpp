@@ -92,8 +92,10 @@ void AMyCharacter::Attack()
 	if(IsAttack)
 		return;
 
-	UE_LOG(LogTemp, Warning, TEXT("Attack"));
 	AnimInstance->PlayAttackMontage();
+	AnimInstance->JumpToSection(AttackIndex);
+	AttackIndex = (AttackIndex + 1) % 3;
+
 	IsAttack = true;
 }
 

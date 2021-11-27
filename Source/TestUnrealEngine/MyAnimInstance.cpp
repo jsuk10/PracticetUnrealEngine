@@ -32,4 +32,26 @@ void UMyAnimInstance::PlayAttackMontage()
 {
 		Montage_Play(AttackAniMontage,1.f);
 }
+
+void UMyAnimInstance::JumpToSection(int32 Section)
+{
+	//인덱스를 통해 섹션을 알아냄
+	FName Name = GetAttackMotageName(Section);
+	//섹션으로 건너뜀
+	Montage_JumpToSection(Name, AttackAniMontage);
+}
+
+FName UMyAnimInstance::GetAttackMotageName(int32 SectionIndex)
+{
+	return FName(*FString::Printf(TEXT("Attack%d"),SectionIndex));
+}
+
+
+//애니메이션에서 노티를 만들었다.
+//노티의 이름과 함수의_이후 이름을 같게 해줄것
+//아래 예시는 노티 이름을 AttackHit로 지었다.
+void UMyAnimInstance::AnimNotify_AttackHit()
+{
+	UE_LOG(LogTemp,Log,TEXT("Hit"));
+}
 	

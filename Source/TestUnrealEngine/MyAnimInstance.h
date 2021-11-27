@@ -17,7 +17,13 @@ class TESTUNREALENGINE_API UMyAnimInstance : public UAnimInstance
 	virtual void NativeUpdateAnimation(float DeltaSeconds) override;
 public:
 	void PlayAttackMontage();
+	void JumpToSection(int32 Section);
+
+	FName GetAttackMotageName(int32 SectionIndex);
 	
+	UFUNCTION()
+	void AnimNotify_AttackHit();
+		
 private:
 	UPROPERTY(EditAnywhere,BlueprintReadOnly, Category="Pwan", Meta=(AllowPrivateAccess=true))
 	float Speed;
