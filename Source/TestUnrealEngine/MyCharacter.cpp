@@ -38,7 +38,9 @@ AMyCharacter::AMyCharacter()
 void AMyCharacter::BeginPlay()
 {
 	Super::BeginPlay();
-	
+
+	AnimInstance = Cast<UMyAnimInstance>(GetMesh()->GetAnimInstance());
+	AnimInstance->OnMontageEnded.AddDynamic(this, &AMyCharacter::OnAttackMontageEnded);
 }
 
 // Called every frame
@@ -86,11 +88,17 @@ void AMyCharacter::Yaw(float Value)
 
 void AMyCharacter::Attack()
 {
-	UMyAnimInstance* Animinstace = Cast<UMyAnimInstance>(GetMesh()->GetAnimInstance());
-	
-	if(Animinstace)
-	{
-		UE_LOG(LogTemp, Warning, TEXT("Attack"));
-		Animinstace->PlayAttackMontage();
-	}
+	//델리게이트를 통해 해당 인스턴스를 지속적으로 파싱하지 않아도 되게 만든다.
+	if(IsAttack)
+		return;
+
+	UE_LOG(LogTemp, Warning, TEXT("Attack"));
+	AnimInstance->PlayAttackMontage();
+	IsAttack = true;
+}
+
+//델리게이트 문법
+void AMyCharacter::OnAttackMontageEnded(UAnimMontage* Montage, bool binterrupted)
+{
+	IsAttack = false;
 }

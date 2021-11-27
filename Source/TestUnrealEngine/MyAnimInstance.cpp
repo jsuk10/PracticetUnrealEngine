@@ -30,10 +30,6 @@ void UMyAnimInstance::NativeUpdateAnimation(float DeltaSeconds)
 }
 void UMyAnimInstance::PlayAttackMontage()
 {
-	if(!Montage_IsPlaying(AttackAniMontage))
-	{
-		UE_LOG(LogTemp, Warning, TEXT("Attack?"));
 		Montage_Play(AttackAniMontage,1.f);
-	}
 }
 	
