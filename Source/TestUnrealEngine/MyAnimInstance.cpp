@@ -6,6 +6,13 @@
 #include "GameFramework/Character.h"
 #include "GameFramework/PawnMovementComponent.h"
 
+UMyAnimInstance::UMyAnimInstance()
+{
+	static ConstructorHelpers::FObjectFinder<UAnimMontage>AM(TEXT("AnimMontage'/Game/Animations/Greystone_Skeleton_Montage.Greystone_Skeleton_Montage'"));	
+	if(AM.Succeeded())
+		AttackAniMontage = AM.Object;
+}
+
 void UMyAnimInstance::NativeUpdateAnimation(float DeltaSeconds)
 {
 	Super::NativeUpdateAnimation(DeltaSeconds);
@@ -14,12 +21,19 @@ void UMyAnimInstance::NativeUpdateAnimation(float DeltaSeconds)
 	if(IsValid(pawn))
 	{
 		Speed = pawn->GetVelocity().Size();
-
 		auto Charater = Cast<ACharacter>(pawn);
 		if(Charater)
 		{
 			IsFalling = Charater->GetMovementComponent()->IsFalling();
 		}
 	}
-
 }
+void UMyAnimInstance::PlayAttackMontage()
+{
+	if(!Montage_IsPlaying(AttackAniMontage))
+	{
+		UE_LOG(LogTemp, Warning, TEXT("Attack?"));
+		Montage_Play(AttackAniMontage,1.f);
+	}
+}
+	

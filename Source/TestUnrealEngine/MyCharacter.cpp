@@ -2,6 +2,8 @@
 
 
 #include "MyCharacter.h"
+
+#include "MyAnimInstance.h"
 #include "GameFramework/SpringArmComponent.h"
 #include "Camera/CameraComponent.h"
 #include "Components/CapsuleComponent.h"
@@ -52,6 +54,7 @@ void AMyCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompone
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 
 	PlayerInputComponent->BindAction(TEXT("Jump"), IE_Pressed ,this, &AMyCharacter::Jump);
+	PlayerInputComponent->BindAction(TEXT("Attack"), IE_Pressed ,this, &AMyCharacter::Attack);
 	PlayerInputComponent->BindAxis(TEXT("UpDown"), this, &AMyCharacter::UpDown);
 	PlayerInputComponent->BindAxis(TEXT("LeftRight"), this, &AMyCharacter::LeftRight);
 	PlayerInputComponent->BindAxis(TEXT("Yaw"), this, &AMyCharacter::Yaw);
@@ -79,4 +82,15 @@ void AMyCharacter::LeftRight(float Value)
 void AMyCharacter::Yaw(float Value)
 {
 	AddControllerYawInput(Value);
+}
+
+void AMyCharacter::Attack()
+{
+	UMyAnimInstance* Animinstace = Cast<UMyAnimInstance>(GetMesh()->GetAnimInstance());
+	
+	if(Animinstace)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("Attack"));
+		Animinstace->PlayAttackMontage();
+	}
 }

@@ -29,6 +29,7 @@ public:
 	void UpDown(float Value);
 	void LeftRight(float Value);
 	void Yaw(float Value);
+	void Attack();
 
 private:
 	UPROPERTY(VisibleAnywhere)
