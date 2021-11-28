@@ -6,6 +6,7 @@
 #include "GameFramework/Character.h"
 #include "MyCharacter.generated.h"
 
+
 UCLASS()
 class TESTUNREALENGINE_API AMyCharacter : public ACharacter
 {
@@ -18,6 +19,7 @@ public:
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
+	virtual void PostInitializeComponents() override;
 
 public:	
 	// Called every frame
@@ -30,6 +32,7 @@ public:
 	void LeftRight(float Value);
 	void Yaw(float Value);
 	void Attack();
+	void AttackCheck();
 
 	UFUNCTION()
 	void OnAttackMontageEnded(UAnimMontage* Montage, bool binterrupted);
@@ -54,4 +57,5 @@ public:
 	float UpDownValue = 0;
 	UPROPERTY(VisibleAnywhere)
 	float LeftRightValue= 0 ;
+
 };

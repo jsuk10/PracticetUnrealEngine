@@ -55,6 +55,6 @@ FName UMyAnimInstance::GetAttackMotageName(int32 SectionIndex)
 //아래 예시는 노티 이름을 AttackHit로 지었다.
 void UMyAnimInstance::AnimNotify_AttackHit()
 {
-	UE_LOG(LogTemp,Log,TEXT("Hit"));
+	OnAttackHit.Broadcast();
 }
 	

@@ -6,6 +6,9 @@
 #include "Animation/AnimInstance.h"
 #include "MyAnimInstance.generated.h"
 
+
+DECLARE_MULTICAST_DELEGATE(FOnAttackHit);
+
 /**
  * 
  */
@@ -39,5 +42,8 @@ private:
 
 	UPROPERTY(EditAnywhere,BlueprintReadOnly, Category="Pwan", Meta=(AllowPrivateAccess=true))
 	UAnimMontage* AttackAniMontage;
+
+public:
+	FOnAttackHit OnAttackHit;
 };
 
