@@ -6,7 +6,6 @@
 #include "Animation/AnimInstance.h"
 #include "MyAnimInstance.generated.h"
 
-
 DECLARE_MULTICAST_DELEGATE(FOnAttackHit);
 
 /**
@@ -16,34 +15,37 @@ UCLASS()
 class TESTUNREALENGINE_API UMyAnimInstance : public UAnimInstance
 {
 	GENERATED_BODY()
-	UMyAnimInstance();
-	virtual void NativeUpdateAnimation(float DeltaSeconds) override;
-public:
-	void PlayAttackMontage();
-	void JumpToSection(int32 Section);
 
-	FName GetAttackMotageName(int32 SectionIndex);
-	
+public:
+	UMyAnimInstance();
+
+	virtual void NativeUpdateAnimation(float DeltaSeconds) override;
+
+	void PlayAttackMontage();
+	void JumpToSection(int32 SectionIndex);
+
+	FName GetAttackMontageName(int32 SectionIndex);
+
+private:
 	UFUNCTION()
 	void AnimNotify_AttackHit();
-		
+
 private:
-	UPROPERTY(EditAnywhere,BlueprintReadOnly, Category="Pwan", Meta=(AllowPrivateAccess=true))
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category=Pawn, Meta=(AllowPrivateAccess=true))
 	float Speed;
 
-	UPROPERTY(EditAnywhere,BlueprintReadOnly, Category="Pwan", Meta=(AllowPrivateAccess=true))
-	float Horizontal;
-	
-	UPROPERTY(EditAnywhere,BlueprintReadOnly, Category="Pwan", Meta=(AllowPrivateAccess=true))
-	float Virtical;
-
-	UPROPERTY(EditAnywhere,BlueprintReadOnly, Category="Pwan", Meta=(AllowPrivateAccess=true))
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Pawn, Meta = (AllowPrivateAccess = true))
 	bool IsFalling;
 
-	UPROPERTY(EditAnywhere,BlueprintReadOnly, Category="Pwan", Meta=(AllowPrivateAccess=true))
-	UAnimMontage* AttackAniMontage;
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Pawn, Meta = (AllowPrivateAccess = true))
+	UAnimMontage* AttackMontage;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Pawn, Meta = (AllowPrivateAccess = true))
+	float Horizontal;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Pawn, Meta = (AllowPrivateAccess = true))
+	float Vertical;
 
 public:
 	FOnAttackHit OnAttackHit;
 };
-

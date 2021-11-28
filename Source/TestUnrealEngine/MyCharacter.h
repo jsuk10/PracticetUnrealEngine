@@ -6,7 +6,6 @@
 #include "GameFramework/Character.h"
 #include "MyCharacter.generated.h"
 
-
 UCLASS()
 class TESTUNREALENGINE_API AMyCharacter : public ACharacter
 {
@@ -19,6 +18,7 @@ public:
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
+
 	virtual void PostInitializeComponents() override;
 
 public:	
@@ -28,14 +28,16 @@ public:
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
-	void UpDown(float Value);
-	void LeftRight(float Value);
-	void Yaw(float Value);
 	void Attack();
 	void AttackCheck();
 
+	void UpDown(float Value);
+	void LeftRight(float Value);
+	void Yaw(float Value);
+
 	UFUNCTION()
-	void OnAttackMontageEnded(UAnimMontage* Montage, bool binterrupted);
+	void OnAttackMontageEnded(UAnimMontage* Montage, bool bInterrupted);
+
 private:
 	UPROPERTY(VisibleAnywhere)
 	class USpringArmComponent* SpringArm;
@@ -43,19 +45,20 @@ private:
 	UPROPERTY(VisibleAnywhere)
 	class UCameraComponent* Camera;
 
-	UPROPERTY(VisibleAnywhere)
-	bool IsAttack = false;
-	
-	UPROPERTY(VisibleAnywhere)
+	UPROPERTY(VisibleAnywhere, Category=Pawn)
+	bool IsAttacking = false;
+
+	UPROPERTY()
 	class UMyAnimInstance* AnimInstance;
 
-	UPROPERTY(VisibleAnywhere)
+	UPROPERTY()
 	int32 AttackIndex = 0;
-public:
-	//BP에서 얻어올 수 있도록 변수 선언하여 움직일때 갱신해줌
-	UPROPERTY(VisibleAnywhere)
-	float UpDownValue = 0;
-	UPROPERTY(VisibleAnywhere)
-	float LeftRightValue= 0 ;
 
+public:
+
+	UPROPERTY()
+	float UpDownValue = 0;
+
+	UPROPERTY()
+	float LeftRightValue = 0;
 };
