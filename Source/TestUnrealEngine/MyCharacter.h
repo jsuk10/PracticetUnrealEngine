@@ -61,4 +61,7 @@ public:
 
 	UPROPERTY()
 	float LeftRightValue = 0;
+
+	UPROPERTY()
+	UStaticMeshComponent* Weapon;
 };

@@ -7,6 +7,7 @@
 #include "Components/CapsuleComponent.h"
 #include "MyAnimInstance.h"
 #include "DrawDebugHelpers.h"
+#include "MyWeapon.h"
 
 // Sets default values
 AMyCharacter::AMyCharacter()
@@ -32,12 +33,39 @@ AMyCharacter::AMyCharacter()
 	{
 		GetMesh()->SetSkeletalMesh(SM.Object);
 	}
+/*
+	FName WeaponSocket(TEXT("hand_l_Socket"));
+	if(GetMesh()->DoesSocketExist(WeaponSocket))
+	{
+		Weapon = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("WEPON"));
+		static ConstructorHelpers::FObjectFinder<UStaticMesh> StaticWepon(TEXT("StaticMesh'/Game/SM_Greystone_Blade_01.SM_Greystone_Blade_01'"));
+		if(StaticWepon.Succeeded())
+		{
+			Weapon->SetStaticMesh(StaticWepon.Object);
+		}
+		Weapon->SetupAttachment(GetMesh(),WeaponSocket);
+	}
+	*/
 }
 
 // Called when the game starts or when spawned
 void AMyCharacter::BeginPlay()
 {
 	Super::BeginPlay();
+
+	FName WeaponSocket(TEXT("hand_l_Socket"));
+
+	auto DropWeapon = GetWorld()->SpawnActor<AMyWeapon>(FVector::ZeroVector,FRotator::ZeroRotator);
+
+	if(DropWeapon)
+	{
+		DropWeapon->AttachToComponent(
+			GetMesh(),
+			FAttachmentTransformRules::SnapToTargetNotIncludingScale,
+			WeaponSocket);
+		
+	}
+	
 }
 
 void AMyCharacter::PostInitializeComponents()
