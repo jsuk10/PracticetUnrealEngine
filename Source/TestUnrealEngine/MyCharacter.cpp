@@ -57,15 +57,15 @@ void AMyCharacter::BeginPlay()
 
 	auto DropWeapon = GetWorld()->SpawnActor<AMyWeapon>(FVector::ZeroVector,FRotator::ZeroRotator);
 
+	/*
 	if(DropWeapon)
 	{
 		DropWeapon->AttachToComponent(
 			GetMesh(),
 			FAttachmentTransformRules::SnapToTargetNotIncludingScale,
 			WeaponSocket);
-		
 	}
-	
+	*/
 }
 
 void AMyCharacter::PostInitializeComponents()
