@@ -6,6 +6,7 @@
 #include "Camera/CameraComponent.h"
 #include "Components/CapsuleComponent.h"
 #include "MyAnimInstance.h"
+#include "MyStatComponent.h"
 #include "DrawDebugHelpers.h"
 #include "MyWeapon.h"
 
@@ -33,19 +34,8 @@ AMyCharacter::AMyCharacter()
 	{
 		GetMesh()->SetSkeletalMesh(SM.Object);
 	}
-/*
-	FName WeaponSocket(TEXT("hand_l_Socket"));
-	if(GetMesh()->DoesSocketExist(WeaponSocket))
-	{
-		Weapon = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("WEPON"));
-		static ConstructorHelpers::FObjectFinder<UStaticMesh> StaticWepon(TEXT("StaticMesh'/Game/SM_Greystone_Blade_01.SM_Greystone_Blade_01'"));
-		if(StaticWepon.Succeeded())
-		{
-			Weapon->SetStaticMesh(StaticWepon.Object);
-		}
-		Weapon->SetupAttachment(GetMesh(),WeaponSocket);
-	}
-	*/
+
+	Stat = CreateDefaultSubobject<UMyStatComponent>(TEXT("Component"));
 }
 
 // Called when the game starts or when spawned
@@ -100,6 +90,15 @@ void AMyCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompone
 	PlayerInputComponent->BindAxis(TEXT("Yaw"), this, &AMyCharacter::Yaw);
 }
 
+//원래 상위 객체에 정의되어 있으나 오버라이드 해서 사용
+float AMyCharacter::TakeDamage(float DamageAmount, FDamageEvent const& DamageEvent, AController* EventInstigator,
+	AActor* DamageCauser)
+{
+	//Super::TakeDamage(DamageAmount, DamageEvent, EventInstigator, DamageCauser);
+	Stat->OnAttacked(DamageAmount);
+	return DamageAmount;
+}
+
 
 void AMyCharacter::Attack()
 {
@@ -148,6 +147,12 @@ void AMyCharacter::AttackCheck()
 	if (bResult && HitResult.Actor.IsValid())
 	{
 		UE_LOG(LogTemp, Log, TEXT("Hit Actor : %s"), *HitResult.Actor->GetName());
+
+		FDamageEvent DamageEvent;
+		//언리얼 자체 제공 데미지 함수 TakeDamage
+		HitResult.Actor->TakeDamage(Stat->GetAttack(),DamageEvent,GetController(), this);
+		//받는쪽에서 처리할지 치는쪽에서 처리할지, 매니저가 깎을지
+		//대부분 받는쪽에서 피격 받는 함수를 만들어서 하는게 편함.
 	}
 }
 
