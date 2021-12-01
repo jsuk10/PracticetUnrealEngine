@@ -34,31 +34,40 @@ void UMyStatComponent::InitializeComponent()
 	SetLevel(Level);
 }
 
-void UMyStatComponent::SetLevel(int32 Level)
+
+void UMyStatComponent::SetLevel(int32 SettingLevel)
 {
 	//싱글톤과 유사하게 게임 인스턴스를 가져옴.
 	//캐싱하여 지속적으로 들고 있는 방법이 더 좋을것 같다.
 	auto MyGameInstance = Cast<UMyGameInstance>(UGameplayStatics::GetGameInstance(GetWorld()));
 	if(MyGameInstance)
 	{
-		auto StatData = MyGameInstance->GetStatData(Level);
+		auto StatData = MyGameInstance->GetStatData(SettingLevel);
 		if(StatData)
 		{
 			this->Level = StatData->Level;
-			Hp = StatData->MaxHp;
+			MaxHp = StatData->MaxHp;
+			SetHp(StatData->MaxHp);
 			Attack = StatData->Attack;
 		}
 		
 	}
 }
 
+
+void UMyStatComponent::SetHp(int32 NewHp)
+{
+	Hp = NewHp;
+	Hp = FMath::Clamp(Hp,0,MaxHp);
+	
+	//리스너 패턴	
+	OnHpChanged.Broadcast();
+}
+
 void UMyStatComponent::OnAttacked(float DamageAmount)
 {
-	Hp-=DamageAmount;
-	if(Hp<0)
-		Hp = 0;
-	
-	UE_LOG(LogTemp,Warning ,TEXT("OnAttacked %d"),Hp);
+	int32 NewHp = Hp - DamageAmount;
+	SetHp(NewHp);
 }
 
 

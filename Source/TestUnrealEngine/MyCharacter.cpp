@@ -8,7 +8,9 @@
 #include "MyAnimInstance.h"
 #include "MyStatComponent.h"
 #include "DrawDebugHelpers.h"
+#include "MyHpWidget.h"
 #include "MyWeapon.h"
+#include "Components/WidgetComponent.h"
 
 // Sets default values
 AMyCharacter::AMyCharacter()
@@ -36,6 +38,24 @@ AMyCharacter::AMyCharacter()
 	}
 
 	Stat = CreateDefaultSubobject<UMyStatComponent>(TEXT("Component"));
+	
+	HpBar = CreateDefaultSubobject<UWidgetComponent>(TEXT("HPBAR"));
+	HpBar->SetupAttachment(GetMesh());
+	HpBar->SetRelativeLocation(FVector(0.f,0.f,200.f));
+
+
+	//ui도 스크린(2D), 월드(3D)가 있다.
+	// 스크린은 항상 잘리지 않는것.
+	//월드는 상대 크기같이 실제 세상에 배치되는 느낌.
+	HpBar->SetWidgetSpace(EWidgetSpace::Screen);
+
+	static ConstructorHelpers::FClassFinder<UUserWidget>UW(TEXT("WidgetBlueprint'/Game/ui/WBP_HPbar.WBP_HPbar_C'"));
+	if(UW.Succeeded())
+	{
+		//위젯에 클래스 달고 사이즈 설정
+		HpBar->SetWidgetClass(UW.Class);
+		HpBar->SetDrawSize(FVector2D(200.f,50.f));
+	}
 }
 
 // Called when the game starts or when spawned
@@ -68,6 +88,13 @@ void AMyCharacter::PostInitializeComponents()
 		AnimInstance->OnMontageEnded.AddDynamic(this, &AMyCharacter::OnAttackMontageEnded);
 		AnimInstance->OnAttackHit.AddUObject(this, &AMyCharacter::AttackCheck);
 	}
+	//초기화를 해줌
+	HpBar->InitWidget();
+
+	//TODo 위젯에 바인드 해줌.
+	auto HpWidget = Cast<UMyHpWidget>(HpBar->GetUserWidgetObject());
+	if(HpWidget)
+		HpWidget->BindHp(Stat);
 }
 
 // Called every frame
