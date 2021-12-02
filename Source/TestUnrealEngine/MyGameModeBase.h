@@ -15,4 +15,11 @@ class TESTUNREALENGINE_API AMyGameModeBase : public AGameModeBase
 	GENERATED_BODY()
 
 	AMyGameModeBase();
+
+	UPROPERTY()
+	TSubclassOf<UUserWidget> MainWidgetClass;
+	
+	UPROPERTY()
+	class UUserWidget* CurrentWidget;
+	
 };
