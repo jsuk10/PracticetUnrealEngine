@@ -8,6 +8,7 @@
 #include "MyAnimInstance.h"
 #include "MyStatComponent.h"
 #include "DrawDebugHelpers.h"
+#include "MyAIController.h"
 #include "MyHpWidget.h"
 #include "MyWeapon.h"
 #include "Components/WidgetComponent.h"
@@ -56,6 +57,10 @@ AMyCharacter::AMyCharacter()
 		HpBar->SetWidgetClass(UW.Class);
 		HpBar->SetDrawSize(FVector2D(200.f,50.f));
 	}
+	
+	//AI컨트롤러가 가지고 있을때, 할 동작 정의
+	AIControllerClass = AMyAIController::StaticClass();
+	AutoPossessAI = EAutoPossessAI::PlacedInWorldOrSpawned;
 }
 
 // Called when the game starts or when spawned
