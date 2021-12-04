@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "GameSave.h"
 #include "Engine/DataTable.h"
 #include "Engine/GameInstance.h"
 #include "MyGameInstance.generated.h"
@@ -20,6 +21,8 @@ struct FMyCharacterData: public FTableRowBase
 	int32 MaxHp;
 };
 
+struct FCharacterData;
+
 UCLASS()
 class TESTUNREALENGINE_API UMyGameInstance : public UGameInstance
 {
@@ -29,8 +32,20 @@ public:
 	virtual void Init() override;
 
 	FMyCharacterData* GetStatData(int32 Level);
-		
+	FCharacterData* GetCharaterData(int32 Level);
+
+	UPROPERTY()
+	TArray<FRaking> Ranking;
+
+public:
+	void GetData();
+	void SaveData();
+	void Test();
+
 private:
 	UPROPERTY()
 	class UDataTable* Mystats;
+	
+	UPROPERTY()
+	class UDataTable* FCharacterDataStats;
 };

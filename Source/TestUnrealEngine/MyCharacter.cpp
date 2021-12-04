@@ -9,6 +9,7 @@
 #include "MyStatComponent.h"
 #include "DrawDebugHelpers.h"
 #include "MyAIController.h"
+#include "MyGameInstance.h"
 #include "MyHpWidget.h"
 #include "MyWeapon.h"
 #include "Components/WidgetComponent.h"
@@ -69,7 +70,11 @@ void AMyCharacter::BeginPlay()
 	Super::BeginPlay();
 
 	FName WeaponSocket(TEXT("hand_l_Socket"));
-
+	
+	auto a = Cast<UMyGameInstance>(GetWorld()->GetGameInstance());
+	if(IsValid(a))
+		a->Test();
+	
 	auto DropWeapon = GetWorld()->SpawnActor<AMyWeapon>(FVector::ZeroVector,FRotator::ZeroRotator);
 
 	/*

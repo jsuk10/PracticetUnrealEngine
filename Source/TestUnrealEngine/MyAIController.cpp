@@ -14,7 +14,6 @@ void AMyAIController::OnPossess(APawn* InPawn)
 {
 	Super::OnPossess(InPawn);
 	GetWorld()->GetTimerManager().SetTimer(TimerHandle, this, &AMyAIController::RandomMove,3.f,true);
-	UE_LOG(LogTemp,Error,TEXT("h"));
 }
 
 void AMyAIController::OnUnPossess()
@@ -26,7 +25,7 @@ void AMyAIController::OnUnPossess()
 void AMyAIController::RandomMove()
 {
 	auto CurrentPawn = GetPawn();
-	UE_LOG(LogTemp,Error,TEXT("move"));
+	//UE_LOG(LogTemp,Error,TEXT("move"));
 
 	UNavigationSystemV1* NavSystem = UNavigationSystemV1::GetNavigationSystem(GetWorld());
 	if(NavSystem == nullptr)
