@@ -4,7 +4,6 @@
 #include "MyGameInstance.h"
 #include "FCharacterData.h"
 #include "GameSave.h"
-#include "AssetRegistry/AssetRegistryModule.h"
 #include "Kismet/GameplayStatics.h"
 
 UMyGameInstance::UMyGameInstance()
@@ -65,9 +64,9 @@ void UMyGameInstance::Test()
 	}
 	if (FCharacterDataStats->IsValidLowLevel())
 	{
-		FCharacterDataStats->AddRow(FName("Test1"), FCharacterData(20));
-
-		}
+		FCharacterDataStats->AddRow(FName("Test3"), FCharacterData(20));
+		FCharacterDataStats->SaveConfig();
+	}
 }
 
 void UMyGameInstance::SaveData()

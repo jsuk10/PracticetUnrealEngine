@@ -12,7 +12,7 @@ USTRUCT()
 struct FMyCharacterData: public FTableRowBase
 {
 	GENERATED_BODY()
-
+	FMyCharacterData():Level(99),Attack(99),MaxHp(99) {}
 	UPROPERTY(EditAnywhere,BlueprintReadWrite)
 	int32 Level;
 	UPROPERTY(EditAnywhere,BlueprintReadWrite)

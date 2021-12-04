@@ -10,8 +10,11 @@ USTRUCT(BlueprintType)
 struct TESTUNREALENGINE_API FCharacterData : public FTableRowBase
 {
 	GENERATED_BODY()
+	
 public:
 	FCharacterData(): Level(1), MaxHp(100.f),Attack(10.f),DropExp(10), NextExp(30){}
+	FCharacterData(int32 test): Level(test), MaxHp(100.f),Attack(10.f),DropExp(10), NextExp(30){}
+	FCharacterData* GetProperties() { return this; }
 
 	UPROPERTY(EditAnywhere,BlueprintReadWrite, Category="Data")
 	int32 Level;
