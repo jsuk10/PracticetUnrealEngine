@@ -21,6 +21,5 @@ class TESTUNREALENGINE_API AMyGameModeBase : public AGameModeBase
 	
 	UPROPERTY()
 	class UUserWidget* CurrentWidget;
-	
-	virtual void InitGame(const FString& MapName, const FString& Options, FString& ErrorMessage) override;
+	virtual void BeginPlay() override;
 };

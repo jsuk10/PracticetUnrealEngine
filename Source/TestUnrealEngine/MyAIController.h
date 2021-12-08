@@ -20,4 +20,10 @@ class TESTUNREALENGINE_API AMyAIController : public AAIController
 
 	void RandomMove();
 	FTimerHandle TimerHandle;
+
+	UPROPERTY()
+	class UBehaviorTree* BehaviorTree;
+	
+	UPROPERTY()
+	class UBlackboardData* BlackBoardData;
 };

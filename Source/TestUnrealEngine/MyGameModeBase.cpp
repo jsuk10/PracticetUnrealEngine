@@ -25,19 +25,20 @@ AMyGameModeBase::AMyGameModeBase()
                 FString ParamStr;
                 for (const FString& Param : Params)
                     ParamStr += Param;
-                UE_LOG(LogTemp, Log, TEXT("Hello World!! Param : [%s]"), *ParamStr);
+                UE_LOG(LogTemp, Log, TEXT("HeUllo World!! Param : [%s]"), *ParamStr);
             }),
         ECVF_Default);
 }
 
-void AMyGameModeBase::InitGame(const FString& MapName, const FString& Options, FString& ErrorMessage)
+void AMyGameModeBase::BeginPlay()
 {
-	Super::InitGame(MapName, Options, ErrorMessage);
-	static ConstructorHelpers::FClassFinder<UMainWidget>MainWdget(TEXT("WidgetBlueprint'/Game/Blueprints/MainWidget.MainWidget_C'"));
+	Super::BeginPlay();
+	UE_LOG(LogTemp,Error,TEXT("tmep"));
+	static ConstructorHelpers::FClassFinder<UMainWidget>MainWdgets(TEXT("WidgetBlueprint'/Game/Blueprints/MainWidget.MainWidget_C'"));
     
-	if(MainWdget.Succeeded())
+	if(MainWdgets.Succeeded())
 	{
-		MainWidgetClass = MainWdget.Class;
+		MainWidgetClass = MainWdgets.Class;
     
 		CurrentWidget = CreateWidget(AActor::GetWorld(), MainWidgetClass);
 		if(CurrentWidget)

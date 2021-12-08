@@ -9,7 +9,7 @@ public class TestUnrealEngine : ModuleRules
 		PCHUsage = PCHUsageMode.UseExplicitOrSharedPCHs;
 	
 		//UMG추가 안하면 오류 나는 경우 생김.
-		PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine", "InputCore", "UMG" });
+		PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine", "InputCore", "UMG","AIModule" ,"GameplayTasks" });
 
 		PrivateDependencyModuleNames.AddRange(new string[] {  });
 
