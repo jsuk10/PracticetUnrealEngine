@@ -19,6 +19,7 @@ AMyAIController::AMyAIController()
 void AMyAIController::OnPossess(APawn* InPawn)
 {
 	Super::OnPossess(InPawn);
+	SetPawn(InPawn);
 	GetWorld()->GetTimerManager().SetTimer(TimerHandle, this, &AMyAIController::RandomMove,3.f,true);
 }
 
