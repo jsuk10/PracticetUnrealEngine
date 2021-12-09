@@ -7,8 +7,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="9a6d4d90-5fe3-4add-8795-dcdffbc585db" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/Source/TestUnrealEngine/MyGameModeBase.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/TestUnrealEngine/MyGameModeBase.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/TestUnrealEngine/MyGameModeBase.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/TestUnrealEngine/MyGameModeBase.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.name" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.name" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/TestUnrealEngine/MyAIController.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/TestUnrealEngine/MyAIController.cpp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -34,13 +35,6 @@
     <property name="cf.first.check.clang-format" value="false" />
     <property name="cidr.known.project.marker" value="true" />
   </component>
-  <component name="RunManager">
-    <configuration default="true" type="GradleAppRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true">
-      <method v="2">
-        <option name="com.jetbrains.cidr.cpp.gradle.execution.GradleNativeBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
-      </method>
-    </configuration>
-  </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -52,6 +46,7 @@
       <workItem from="1638694758737" duration="47000" />
       <workItem from="1638694852315" duration="28000" />
       <workItem from="1638694889489" duration="38000" />
+      <workItem from="1639067423760" duration="2000" />
     </task>
     <servers />
   </component>

@@ -215,4 +215,6 @@ void AMyCharacter::Yaw(float Value)
 void AMyCharacter::OnAttackMontageEnded(UAnimMontage* Montage, bool bInterrupted)
 {
 	IsAttacking = false;
+	//델리를 이용해 해당 함수가 종료됨을 알림
+	OnAttackEnd.Broadcast();
 }

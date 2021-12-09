@@ -21,8 +21,7 @@ UBTService_SearchTarget::UBTService_SearchTarget()
 void UBTService_SearchTarget::TickNode(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory, float DeltaSeconds)
 {
 	Super::TickNode(OwnerComp, NodeMemory, DeltaSeconds);
-	auto temp = OwnerComp.GetAIOwner();
-	auto CurrentPawn = temp->GetPawn();
+	auto CurrentPawn = OwnerComp.GetAIOwner()->GetPawn();
 
 	if(CurrentPawn == nullptr)
 		return;
@@ -57,6 +56,7 @@ void UBTService_SearchTarget::TickNode(UBehaviorTreeComponent& OwnerComp, uint8*
 			if(MyCharacter && MyCharacter->GetController()->IsPlayerController())
 			{
 				OwnerComp.GetBlackboardComponent()->SetValueAsObject(FName(TEXT("Target")),MyCharacter);
+				OwnerComp.GetBlackboardComponent()->SetValueAsVector(FName(TEXT("TargetVector")),MyCharacter->GetActorLocation());
 				DrawDebugSphere(World,Center,SearchRadius,16,FColor::Magenta,false,0.2f);
 				return;
 			}

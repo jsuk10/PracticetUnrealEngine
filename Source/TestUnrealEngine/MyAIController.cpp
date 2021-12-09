@@ -20,18 +20,19 @@ void AMyAIController::OnPossess(APawn* InPawn)
 {
 	Super::OnPossess(InPawn);
 	SetPawn(InPawn);
-	GetWorld()->GetTimerManager().SetTimer(TimerHandle, this, &AMyAIController::RandomMove,3.f,true);
+	//GetWorld()->GetTimerManager().SetTimer(TimerHandle, this, &AMyAIController::RandomMove,3.f,true);
+	if (UseBlackboard(BlackBoardData, Blackboard) && RunBehaviorTree(BehaviorTree))
+	{
+		//TODO BlackBoard
+	}
 }
 
 void AMyAIController::OnUnPossess()
 {
 	Super::OnUnPossess();
-	GetWorld()->GetTimerManager().ClearTimer(TimerHandle);
+	//GetWorld()->GetTimerManager().ClearTimer(TimerHandle);
 
-	if(UseBlackboard(BlackBoardData,Blackboard) && RunBehaviorTree(BehaviorTree))
-	{
-		//TODO BlackBoard
-	}
+	
 }
 
 void AMyAIController::RandomMove()
