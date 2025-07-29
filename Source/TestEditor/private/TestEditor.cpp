@@ -1,4 +1,4 @@
-#include "TestEditor.h"
+ï»¿#include "TestEditor.h"
 #include "Modules/ModuleManager.h"
 #include "LevelEditor.h"
 #include "Framework/MultiBox/MultiBoxBuilder.h"
@@ -8,54 +8,90 @@ IMPLEMENT_MODULE(FTestEditor, TestEditor)
 
 void FTestEditor::StartupModule()
 {
-    // ¸Ş´º È®ÀåÀÚ »ı¼º
+    // ë©”ë‰´ í™•ì¥ì ìƒì„±
     TSharedPtr<FExtender> MenuExtender = MakeShareable(new FExtender());
 
-    // ¸Ş´º È®Àå ¹ÙÀÎµù
+    // ë©”ë‰´ í™•ì¥ ë°”ì¸ë”©
     MenuExtender->AddMenuBarExtension(
-        // ºÙÀÏ ¸Ş´º À§Ä¡(Ã¢ ¸Ş´º¸¦ ±âÁØ)
+        // ë¶™ì¼ ë©”ë‰´ ìœ„ì¹˜(ì°½ ë©”ë‰´ë¥¼ ê¸°ì¤€)
         "Window",
-        // À§Ä¡ ±âÁØ
+        // ìœ„ì¹˜ ê¸°ì¤€
         EExtensionHook::After,
-        // Ä¿¸Çµå ¸®½ºÆ® (¾øÀ¸¸é nullptr)
+        // ì»¤ë§¨ë“œ ë¦¬ìŠ¤íŠ¸ (ì—†ìœ¼ë©´ nullptr)
         nullptr,
-        // »ı¼ºµÈ ÀÌÈÄ È£ÃâµÉ µ¨¸®°ÔÀÌÆ®
+        // ìƒì„±ëœ ì´í›„ í˜¸ì¶œë  ë¸ë¦¬ê²Œì´íŠ¸
         FMenuBarExtensionDelegate::CreateRaw(this, &FTestEditor::AddMenuBarEntry)
     );
 
-    // ·¹º§ ¿¡µğÅÍ ¸ğµâ ÂüÁ¶
+    // ë ˆë²¨ ì—ë””í„° ëª¨ë“ˆ ì°¸ì¡°
     FLevelEditorModule& LevelEditorModule = FModuleManager::LoadModuleChecked<FLevelEditorModule>("LevelEditor");
 
-    // ·¹º§ ¿¡µğÅÍ¿¡ ¸Ş´º È®ÀåÀÚ µî·Ï
+    // ë ˆë²¨ ì—ë””í„°ì— ë©”ë‰´ í™•ì¥ì ë“±ë¡
     LevelEditorModule.GetMenuExtensibilityManager()->AddExtender(MenuExtender);
+    
+
+    // íˆ´ë°” í™•ì¥ì ìƒì„±
+    TSharedPtr<FExtender> ToolbarExtender = MakeShareable(new FExtender);
+
+    // "Content" íˆ´ë°” ì„¹ì…˜ ë’¤ì— ë²„íŠ¼ ì¶”ê°€
+    ToolbarExtender->AddToolBarExtension(
+        // ê¸°ì¤€ ì„¹ì…˜ (ì½˜í…ì¸  ë²„íŠ¼ ë’¤)
+        "Content",                    
+        // ê·¸ ë’¤ì—
+        EExtensionHook::After,       
+        // ëª…ë ¹ ëª©ë¡
+        nullptr,                 
+        // ìƒì„±ëœ ì´í›„ í˜¸ì¶œë  ë¸ë¦¬ê²Œì´íŠ¸
+        FToolBarExtensionDelegate::CreateRaw(this, &FTestEditor::AddToolbarButton)
+    );
+
+    // íˆ´ë°” í™•ì¥ ë“±ë¡
+    LevelEditorModule.GetToolBarExtensibilityManager()->AddExtender(ToolbarExtender);
+}
+
+void FTestEditor::AddToolbarButton(FToolBarBuilder& ToolbarBuilder)
+{
+    ToolbarBuilder.AddToolBarButton(
+        FUIAction(
+            FExecuteAction::CreateLambda([]()
+                {
+                    // ë²„íŠ¼ ëˆŒë €ì„ ë•Œ ë™ì‘
+                    UE_LOG(LogTemp, Log, TEXT("íˆ´ë°” ë²„íŠ¼ í´ë¦­ë¨!"));
+                })
+        ),
+        FName(TEXT("MyButton")),
+        FText::FromString(TEXT("My Button")),
+        FText::FromString(TEXT("Tool tip")),
+        FSlateIcon(FEditorStyle::GetStyleSetName(), "LevelEditor.GameSettings") // ì˜ˆì‹œ ì•„ì´ì½˜
+    );
 }
 
 void FTestEditor::AddMenuBarEntry(FMenuBarBuilder& MenuBarBuilder)
 {
     MenuBarBuilder.AddPullDownMenu(
-        // µå·Ó´Ù¿î ¸Ş´º ÀÌ¸§
+        // ë“œë¡­ë‹¤ìš´ ë©”ë‰´ ì´ë¦„
         FText::FromString("MyDropdown"),                                    
-        // ÅøÆÁ
+        // íˆ´íŒ
         FText::FromString("Open My Dropdown"),                              
-        // »ı¼ºÈÄ È£ÃâµÉ µ¨¸®°ÔÀÌÆ®
+        // ìƒì„±í›„ í˜¸ì¶œë  ë¸ë¦¬ê²Œì´íŠ¸
         FNewMenuDelegate::CreateRaw(this, &FTestEditor::FillPulldownMenu),
-        // ¸Ş´º hook (id)
-        "MyDropdown"                                                        
+        // ë©”ë‰´ hook (id)
+        FName(TEXT("MyDropdown"))
     );
 }
 
 void FTestEditor::FillPulldownMenu(FMenuBuilder& MenuBuilder)
 {
     MenuBuilder.AddMenuEntry(
-        // ¸Ş´º ÀÌ¸§
+        // ë©”ë‰´ ì´ë¦„
         FText::FromString("Option 1"),
-        // ÅøÆÁ
+        // íˆ´íŒ
         FText::FromString("Do something 1"),
-        // ¾ÆÀÌÄÜ
+        // ì•„ì´ì½˜
         FSlateIcon(),
-        // Å¬¸¯ÈÄ ½ÇÇàµÉ Action
+        // í´ë¦­í›„ ì‹¤í–‰ë  Action
         FUIAction(
-            //FExecuteAction = µ¨¸®°ÔÀÌÆ®
+            //FExecuteAction = ë¸ë¦¬ê²Œì´íŠ¸
             FExecuteAction::CreateLambda([this]()
                 {
                     UE_LOG(LogTemp, Log, TEXT("Option 1 clicked Lambda!"));
