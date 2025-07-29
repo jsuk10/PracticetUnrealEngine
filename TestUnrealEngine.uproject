@@ -1,6 +1,6 @@
 {
 	"FileVersion": 3,
-	"EngineAssociation": "4.27",
+	"EngineAssociation": "{EF664932-432B-4154-4E63-A4A840DCD65E}",
 	"Category": "",
 	"Description": "",
 	"Modules": [
@@ -15,6 +15,11 @@
 				"NavigationSystem",
 				"GameplayTasks"
 			]
+		},
+		{
+			"Name": "TestEditor",
+			"Type": "Editor",
+			"LoadingPhase": "Default"
 		}
 	]
 }
