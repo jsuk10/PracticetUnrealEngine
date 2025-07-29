@@ -10,7 +10,14 @@ public class TestEditor : ModuleRules
 
         PrivateDependencyModuleNames.AddRange(
             new string[] {
-                "Core", "CoreUObject", "Engine", "UnrealEd"
+                "Slate",
+                "SlateCore",
+                "EditorStyle",
+                "UnrealEd",
+                "Core",
+                "CoreUObject",
+                "Engine",
+                "UnrealEd"
             }
         );
 
