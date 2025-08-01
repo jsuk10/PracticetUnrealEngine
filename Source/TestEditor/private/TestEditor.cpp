@@ -3,6 +3,8 @@
 #include "LevelEditor.h"
 #include "Framework/MultiBox/MultiBoxBuilder.h"
 #include "Modules/ModuleManager.h"
+#include <IContentBrowserSingleton.h>
+#include <ContentBrowserModule.h>
 
 IMPLEMENT_MODULE(FTestEditor, TestEditor)
 
@@ -28,7 +30,7 @@ void FTestEditor::StartupModule()
 
     // 레벨 에디터에 메뉴 확장자 등록
     LevelEditorModule.GetMenuExtensibilityManager()->AddExtender(MenuExtender);
-    
+
 
     // 툴바 확장자 생성
     TSharedPtr<FExtender> ToolbarExtender = MakeShareable(new FExtender);
@@ -148,6 +150,39 @@ void FTestEditor::OpenAssetPickerWindow()
             CBModule.Get().SyncBrowserToAssets(AssetsToSync, true);
         });
     AssetPickerConfig.InitialAssetViewType = EAssetViewType::List;
+
+    // Asset Picker 위젯 생성
+    FContentBrowserModule& ContentBrowserModule = FModuleManager::LoadModuleChecked<FContentBrowserModule>("ContentBrowser");
+    TSharedRef<SWidget> AssetPickerWidget = ContentBrowserModule.Get().CreateAssetPicker(AssetPickerConfig);
+
+    // 창 만들기
+    PickerWindow = SNew(SWindow)
+        .Title(INVTEXT("Slate Asset Picker"))
+        .ClientSize(FVector2D(600, 400))
+        .SupportsMinimize(false)
+        .SupportsMaximize(false)
+        [
+            SNew(SBorder)
+                .Padding(8)
+                [
+                    SNew(SVerticalBox)
+                        + SVerticalBox::Slot()
+                        .AutoHeight()
+                        .Padding(0, 0, 0, 4)
+                        [
+                            SNew(STextBlock)
+                                .Text(INVTEXT("Static Mesh 선택:"))
+                                .Font(FCoreStyle::GetDefaultFontStyle("Regular", 14))
+                        ]
+                        + SVerticalBox::Slot()
+                        .FillHeight(1.0f)
+                        [
+                            AssetPickerWidget
+                        ]
+                ]
+        ];
+
+    FSlateApplication::Get().AddWindow(PickerWindow.ToSharedRef());
 }
 
 void FTestEditor::ShutdownModule()
