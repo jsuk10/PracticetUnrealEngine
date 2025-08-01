@@ -14,4 +14,7 @@ private:
     void FillPulldownMenu(FMenuBuilder& MenuBuilder);
     void AddToolbarButton(FToolBarBuilder& ToolbarBuilder);
     void OnClickMenuFun();
+    void OpenAssetPickerWindow();
+
+    TSharedPtr<class SWindow> PickerWindow;
 };
