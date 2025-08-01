@@ -64,6 +64,14 @@ void FTestEditor::AddToolbarButton(FToolBarBuilder& ToolbarBuilder)
         FText::FromString(TEXT("Tool tip")),
         FSlateIcon(FEditorStyle::GetStyleSetName(), "LevelEditor.GameSettings") // 예시 아이콘
     );
+
+    ToolbarBuilder.AddToolBarButton(
+        FUIAction(FExecuteAction::CreateRaw(this, &FTestEditor::OpenAssetPickerWindow)),
+        NAME_None,
+        INVTEXT("Asset Picker"),
+        INVTEXT("Open Slate Asset Picker"),
+        FSlateIcon(FEditorStyle::GetStyleSetName(), "LevelEditor.GameSettings")
+    );
 }
 
 void FTestEditor::AddMenuBarEntry(FMenuBarBuilder& MenuBarBuilder)
@@ -110,6 +118,36 @@ void FTestEditor::FillPulldownMenu(FMenuBuilder& MenuBuilder)
 void FTestEditor::OnClickMenuFun()
 {
     UE_LOG(LogTemp, Warning, TEXT("FTestEditor::OnClickMenuFun"));
+}
+
+void FTestEditor::OpenAssetPickerWindow()
+{
+    if (PickerWindow.IsValid())
+    {
+        PickerWindow->BringToFront();
+        return;
+    }
+
+    FAssetPickerConfig AssetPickerConfig;
+    // StaticMesh만 필터링
+    AssetPickerConfig.Filter.ClassNames.Add(UStaticMesh::StaticClass()->GetFName());
+    // 상속 구조 포함 여부
+    AssetPickerConfig.Filter.bRecursiveClasses = true;
+    // 에셋 선택 모드 설정
+    AssetPickerConfig.SelectionMode = ESelectionMode::Single;
+    // 에셋 선택 후 호출될 델리게이트 설정
+    AssetPickerConfig.OnAssetSelected = FOnAssetSelected::CreateLambda([this](const FAssetData& SelectedAsset)
+        {
+            // 로그 출력
+            UE_LOG(LogTemp, Log, TEXT("선택된 자산: %s"), *SelectedAsset.GetFullName());
+
+            // Content Browser를 선택된 에셋이 들어있는 폴더로 이동/동기화
+            FContentBrowserModule& CBModule = FModuleManager::LoadModuleChecked<FContentBrowserModule>("ContentBrowser");
+            TArray<FAssetData> AssetsToSync;
+            AssetsToSync.Add(SelectedAsset);
+            CBModule.Get().SyncBrowserToAssets(AssetsToSync, true);
+        });
+    AssetPickerConfig.InitialAssetViewType = EAssetViewType::List;
 }
 
 void FTestEditor::ShutdownModule()
